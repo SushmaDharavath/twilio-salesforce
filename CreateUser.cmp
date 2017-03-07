@@ -1,0 +1,67 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,force:hasRecordId" controller="SaveTestUser" >
+   <aura:attribute name="user" type="Test_User__c" default="{ 'sobjectType': 'Test_User__c' }"/>
+   <aura:attribute name="hasErrors" type="Boolean" description="Indicate whether there were failures or not" />
+   <aura:attribute name="caseStudy" type="String" />
+   <aura:attribute name="recordId" type="String"/>
+
+   <aura:handler name="init" value="{!this}" action="{!c.init}" />
+
+   <div class="slds-page-header" role="banner">
+      <p class="slds-text-heading--label">Case Study</p>
+      <h1 class="slds-page-header__title slds-m-right--small slds-truncate slds-align-left" title="Case Study Title">{!v.caseStudy}</h1>
+   </div>
+   <br/>
+
+   <aura:if isTrue="{!v.hasErrors}">
+      <!-- Load error -->
+      <div class="userCreateError">
+         <ui:message title="Error" severity="error" closable="true">
+            Please review the error messages.
+         </ui:message>
+      </div>
+   </aura:if>
+
+   <div class="slds-form--stacked">
+
+      <div class="slds-form-element">
+         <label class="slds-form-element__label" for="firstName">Enter first name: </label>
+         <div class="slds-form-element__control">
+            <ui:inputText class="slds-input" aura:id="firstName" value="{!v.user.first}" required="true" keydown="{!c.updateNickname}" updateOn="keydown"/>
+         </div>
+      </div>
+
+      <div class="slds-form-element">
+         <label class="slds-form-element__label" for="lastName">Enter last name: </label>
+         <div class="slds-form-element__control">
+            <ui:inputText class="slds-input" aura:id="lastName" value="{!v.user.last}" required="true" />
+         </div>
+      </div>
+
+      <div class="slds-form-element">
+         <label class="slds-form-element__label" for="nickname">Enter nickname: </label>
+         <div class="slds-form-element__control">
+            <ui:inputText class="slds-input" aura:id="nickname" value="{!v.user.nickname}" required="false"/>
+         </div>
+      </div>
+
+      <div class="slds-form-element">
+         <label class="slds-form-element__label" for="userEmail">Enter user's email:</label>
+         <div class="slds-form-element__control">
+            <ui:inputEmail class="slds-input" aura:id="userEmail" value="{!v.user.Email__c}" required="true"/>
+         </div>
+      </div>
+
+      <div class="slds-form-element">
+         <label class="slds-form-element__label" for="userPassword">Enter user's password:</label>
+         <div class="slds-form-element__control">
+            <ui:inputSecret class="slds-input" aura:id="userPassword" value="{!v.user.Password__c}" required="true"/>
+         </div>
+      </div>
+
+      <div class="slds-form-element">
+         <ui:button class="slds-button slds-button--neutral" press="{!c.cancel}" label="Cancel" />
+         <ui:button class="slds-button slds-button--brand" press="{!c.saveUserForm}" label="Save User" />
+      </div>
+   </div>
+
+</aura:component>
